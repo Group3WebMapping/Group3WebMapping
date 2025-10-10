@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,14 +23,16 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-    <script src="map.js"></script>
 
+    <script>
+        var map = L.map('map').setView([29.8884, -97.9384], 14);
+        mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+            }).addTo(map);
+    </script>
 </body>
 </html>
-=======
-Hello World, Ashlyn edited this page
-Hello World, Michael S edited this page
-Hello World, Michael edited this page
-Hello World, Campbell edited this page;
-Hello World, Ishraq edited this page.
->>>>>>> 500683a981eff1c2aac13c6c2a07a1139dbcce93
