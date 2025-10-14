@@ -6,26 +6,21 @@ L.tileLayer(
     attribution: '&copy; ' + mapLink + ' Contributors',
     maxZoom: 18,
     }).addTo(map);
-    function DestinationPoint() {
-  var start = turf.point([-97.9384, 29.8884]);
-  var distance = 1;
-  var bearing = 45;
+
+function PointDistance () {
+  var PointA = turf.point([-97.941, 29.885]);
+  var PointB = turf.point([-97.939, 29.867]);
   var options = { units: "miles" };
-  var destination = turf.destination(start, distance, bearing, options);
-  var destCoords = destination.geometry.coordinates;
-  L.marker([29.8884, -97.9384])
-    .addTo(map)
-    .bindPopup("Start Point (San Marcos)");
+  var distance = turf.distance(PointA, PointB, options);
 
-  L.marker([destCoords[1], destCoords[0]])
-    .addTo(map)
-    .bindPopup("Destination<br>Distance: " + distance + " mile(s)<br>Bearing: " + bearing + "°");
+  L.marker([29.885,-97.941]) 
+  .addTo(map).bindPopup("Distance: " + distance + " miles");
+  L.marker([29.867,-97.939])
+  .addTo(map).bindPopup("Distance: " + distance + " miles");
 
-  L.polyline([
-    [29.8884, -97.9384],
-    [destCoords[1], destCoords[0]]
-  ])
+  L.polyline([[29.885,-97.941],[29.867, -97.939]])
   .addTo(map)
-  .bindPopup("Route: " + distance + " mile(s)");
+  .bindPopup("Distance: " + distance + " miles");
 }
-DestinationPoint();
+
+PointDistance();
