@@ -7,19 +7,12 @@ L.tileLayer(
     maxZoom: 18,
     }).addTo(map);
     function DestinationPoint() {
-  // Define starting point in San Marcos
-  var start = turf.point([-97.9384, 29.8884]); // [lng, lat]
-
-  // Define distance and bearing
-  var distance = 1; // miles
-  var bearing = 45; // northeast
+  var start = turf.point([-97.9384, 29.8884]);
+  var distance = 1;
+  var bearing = 45;
   var options = { units: "miles" };
-
-  // Compute destination using Turf
   var destination = turf.destination(start, distance, bearing, options);
   var destCoords = destination.geometry.coordinates;
-
-  // Add markers and a connecting line
   L.marker([29.8884, -97.9384])
     .addTo(map)
     .bindPopup("Start Point (San Marcos)");
@@ -35,6 +28,4 @@ L.tileLayer(
   .addTo(map)
   .bindPopup("Route: " + distance + " mile(s)");
 }
-
-// Call the function
 DestinationPoint();
