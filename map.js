@@ -27,9 +27,10 @@ L.tileLayer(
         // Calculate the area using Turf.js (in square meters)
         var area = turf.area(geojson);
 
-        // Update the popup content with the calculated area
-        polygon.setPopupContent('Area: ' + area.toFixed(2) + ' square meters');
+        console.log('Calculated Area:', area);  // Log the calculated area to the console
 
-        // Open the popup after setting the content
+
+        polygon.setPopupContent('Area: ' + area.toFixed(2) + ' square meters');
+        
         polygon.openPopup();
     });
