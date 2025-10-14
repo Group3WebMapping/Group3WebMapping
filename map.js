@@ -17,4 +17,6 @@ var polygon = L.polygon(polygonCoords, { color: 'blue' }).addTo(map);
 polygon.on('click', function () {
     var geojson = polygon.toGeoJSON();
     var area = turf.area(geojson);
+    polygon.setPopupContent('Area: ' + area.toFixed(2) + ' square meters');
+    polygon.openPopup();
 });
