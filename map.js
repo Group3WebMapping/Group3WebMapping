@@ -6,3 +6,15 @@ L.tileLayer(
     attribution: '&copy; ' + mapLink + ' Contributors',
     maxZoom: 18,
     }).addTo(map);
+    var polygonCoords = [
+    [30.2800, -97.7500],
+    [30.2800, -97.7000],
+    [30.2400, -97.7000],
+    [30.2400, -97.7500]
+];
+var polygon = L.polygon(polygonCoords, { color: 'blue' }).addTo(map);
+polygon.on('click', function () {
+    var geojson = polygon.toGeoJSON();
+    var area = turf.area(geojson);
+    polygon.bindPopup('Area: ' + area.toFixed(2) + ' square meters').openPopup();
+});
