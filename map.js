@@ -6,23 +6,35 @@ L.tileLayer(
     attribution: '&copy; ' + mapLink + ' Contributors',
     maxZoom: 18,
     }).addTo(map);
-    var center = [-97.9400, 29.8830]; // San Marcos, TX
+    function DestinationPoint() {
+  // Define starting point in San Marcos
+  var start = turf.point([-97.9384, 29.8884]); // [lng, lat]
 
-  // Define the radius in kilometers (or another unit if needed)
-  var radius = 5; // 5 kilometers radius
+  // Define distance and bearing
+  var distance = 1; // miles
+  var bearing = 45; // northeast
+  var options = { units: "miles" };
 
-  // Options for the circle, you can customize these
-  var options = {
-      steps: 64,      // More steps for a smoother circle (default is 64)
-      units: "kilometers", // Units for the radius
-      properties: { foo: "bar" } // You can add custom properties if needed
-  };
+  // Compute destination using Turf
+  var destination = turf.destination(start, distance, bearing, options);
+  var destCoords = destination.geometry.coordinates;
 
-  // Generate the circle using Turf.js
-  var circle = turf.circle(center, radius, options);
+  // Add markers and a connecting line
+  L.marker([29.8884, -97.9384])
+    .addTo(map)
+    .bindPopup("Start Point (San Marcos)");
 
-  // You can log the GeoJSON to the console to check the result
-  console.log(circle);
+  L.marker([destCoords[1], destCoords[0]])
+    .addTo(map)
+    .bindPopup("Destination<br>Distance: " + distance + " mile(s)<br>Bearing: " + bearing + "°");
 
-  // Optionally, add the circle to a Leaflet map
-  L.geoJSON(circle).addTo(map);
+  L.polyline([
+    [29.8884, -97.9384],
+    [destCoords[1], destCoords[0]]
+  ])
+  .addTo(map)
+  .bindPopup("Route: " + distance + " mile(s)");
+}
+
+// Call the function
+DestinationPoint();
