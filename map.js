@@ -12,9 +12,9 @@ L.tileLayer(
     [30.2400, -97.7000],
     [30.2400, -97.7500]
 ];
+    polygon.bindPopup('Area: ' + area.toFixed(2) + ' square meters').openPopup();
 var polygon = L.polygon(polygonCoords, { color: 'blue' }).addTo(map);
 polygon.on('click', function () {
     var geojson = polygon.toGeoJSON();
     var area = turf.area(geojson);
-    polygon.bindPopup('Area: ' + area.toFixed(2) + ' square meters').openPopup();
 });
