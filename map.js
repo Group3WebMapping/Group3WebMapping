@@ -6,31 +6,31 @@ L.tileLayer(
     attribution: '&copy; ' + mapLink + ' Contributors',
     maxZoom: 18,
     }).addTo(map);
-    var polygonCoords = [
-        [30.2800, -97.7500],  // Top-left corner
-        [30.2800, -97.7000],  // Top-right corner
-        [30.2400, -97.7000],  // Bottom-right corner
-        [30.2400, -97.7500]   // Bottom-left corner
-    ];
+    // Create a polygon using Turf.js (this will be a simple polygon around some coordinates)
+var polygon = turf.polygon([
+    [
+        [125, -15],
+        [113, -22],
+        [154, -27],
+        [144, -15],
+        [125, -15],  // Closing the polygon by repeating the first coordinate
+    ]
+]);
 
-    // Create the polygon and add it to the map
-    var polygon = L.polygon(polygonCoords, { color: 'blue' }).addTo(map);
+// Convert the Turf.js polygon to GeoJSON
+var geojson = polygon;
 
-    // Bind a basic popup to the polygon before the click event
-    polygon.bindPopup('Click to calculate area.');
+// Add the polygon to the map using Leaflet
+L.geoJSON(geojson, {
+    style: { color: 'blue' },
+    onEachFeature: function (feature, layer) {
+        // When the polygon is clicked, calculate the area and show it in a popup
+        layer.on('click', function () {
+            // Calculate the area using Turf.js (returns area in square meters)
+            var area = turf.area(feature);
 
-    // Add an event listener for the click event
-    polygon.on('click', function () {
-        // Convert the Leaflet polygon to GeoJSON
-        var geojson = polygon.toGeoJSON();
-
-        // Calculate the area using Turf.js (in square meters)
-        var area = turf.area(geojson);
-
-        console.log('Calculated Area:', area);  // Log the calculated area to the console
-
-
-        polygon.setPopupContent('Area: ' + area.toFixed(2) + ' square meters');
-        
-        polygon.openPopup();
-    });
+            // Show the area in the popup
+            layer.bindPopup('Area: ' + area.toFixed(2) + ' square meters').openPopup();
+        });
+    }
+}).addTo(map);
