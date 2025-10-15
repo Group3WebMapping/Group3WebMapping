@@ -29,3 +29,14 @@ L.tileLayer(
   .bindPopup("Route: " + distance + " mile(s)");
 }
 DestinationPoint();
+
+    var point = turf.point([-97.9384, 29.8884]);
+    var buffered = turf.buffer(point, 500, { units: "miles" });
+    L.geoJSON(buffered, {
+    style: {
+        color: "green",
+        weight: 3,
+        fillColor: "lightgreen",
+        fillOpacity: 0.3
+    }
+    }).addTo(map);
